@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="indexCss.css">
+    </head>
+    <body>
+        <div id="form">
+            <input class="inputForm" type="text" name="nome">
+            <input class="inputForm" type="text" name="cognome">
+            <input id="submit" type="button" value="invia">
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#submit").click(function () {
+                    console.log("richiesta");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:8080/WebApplication5/rest/ciao',
+                        contentType: 'application/json',
+                        data: JSON.stringify({nome: document.getElementsByName("nome")[0].value, cognome: document.getElementsByName("cognome")[0].value}),
+                        success: function (response) {
+                            $(".inputForm").val("");
+                            console.log("Andato");
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            document.appendChild(document.createTextNode("Errore ALunno"));
+                            console.log(jqHXR, textStatus, errorThrown);
+                        }
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
