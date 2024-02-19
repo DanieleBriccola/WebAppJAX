@@ -7,6 +7,7 @@ package service;
 
 import persistenza.PersistenzaAlunno;
 import dominio.Alunno;
+import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
@@ -41,10 +42,10 @@ public class Controllore extends Application {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response onPostJson(Alunno alunno){
-        Alunno newAlunno = alunno;
+    public Response onPostJson(Alunno alunno) throws IOException{
         System.out.println("creato: " + alunno.getCognome());
         persistenzaAlunno.create(alunno, alunno.getId());
+        persistenzaAlunno.scriviFile();
         return Response.ok().build();
     }
     

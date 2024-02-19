@@ -5,6 +5,7 @@
  */
 package persistenza;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -20,8 +21,9 @@ public abstract class Persistenza<Key, Value> {
 
     protected abstract Map<Key, Value> setLista();
 
-    public Persistenza() {
+    public Persistenza() throws IOException, ClassNotFoundException {
         lista = setLista();
+        lista = leggiFile();
     }
 
     public void create(Value value, Key key) {
@@ -49,6 +51,17 @@ public abstract class Persistenza<Key, Value> {
     public List<Value> listAll() {
         return new ArrayList<Value>(lista.values());
     }
+    
+    public void scriviFile() throws IOException{
+        FileManager<Map<Key,Value>> fileManager = new FileManager();
+        fileManager.scrivi(lista);
+    }
+    
+    public Map<Key,Value> leggiFile() throws IOException, ClassNotFoundException{
+        FileManager<Map<Key,Value>> fileManager = new FileManager();
+        return fileManager.leggi();
+    }
+    
 
     protected abstract Key generateNewKey();
 

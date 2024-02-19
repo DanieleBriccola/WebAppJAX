@@ -5,11 +5,13 @@
  */
 package dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author danie
  */
-public class Alunno {
+public class Alunno implements Serializable {
     
     private String nome;
     private String cognome;

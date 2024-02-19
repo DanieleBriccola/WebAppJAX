@@ -25,7 +25,7 @@ and open the template in the editor.
                     console.log("richiesta");
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:8080/WebApplication5/rest/ciao',
+                        url: 'http://localhost:8080/ws/rest/ciao',
                         contentType: 'application/json',
                         data: JSON.stringify({nome: document.getElementsByName("nome")[0].value, cognome: document.getElementsByName("cognome")[0].value}),
                         success: function (response) {
@@ -33,7 +33,6 @@ and open the template in the editor.
                             console.log("Andato");
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            document.appendChild(document.createTextNode("Errore ALunno"));
                             console.log(jqHXR, textStatus, errorThrown);
                         }
                     })

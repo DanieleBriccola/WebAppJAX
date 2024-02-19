@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/dominio/Alunno.java</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/service/WServer.java</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/persistenza/Persistenza.java</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/web/indexCss.css</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/persistenza/PersistenzaAlunno.java</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/web/index.html</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/service/Controllore.java</file>
-            <file>file:/C:/Users/danie/Documents/NetBeansProjects/WebApplication5/src/java/service/Secondario.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/web/indexCss.css</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/persistenza/FileManager.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/service/Controllore.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/dominio/Alunno.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/persistenza/Persistenza.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/web/index.html</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/service/WServer.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/persistenza/PersistenzaAlunno.java</file>
+            <file>file:/C:/Users/danie/Documents/NetBeansProjects/PrepVer/src/java/service/Secondario.java</file>
         </group>
     </open-files>
 </project-private>
