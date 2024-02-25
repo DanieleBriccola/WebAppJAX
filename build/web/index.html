@@ -12,32 +12,20 @@ and open the template in the editor.
         <link rel="stylesheet" href="indexCss.css">
     </head>
     <body>
-        <div id="form">
-            <input class="inputForm" type="text" name="nome">
-            <input class="inputForm" type="text" name="cognome">
-            <input id="submit" type="button" value="invia">
-        </div>
+        <h1>LOGIN</h1>
+        <form method="post" action="http://localhost:8080/ws/ws/utenti">
+            <input type="text" name="nickName" required>
+            <input type="password" name="password" required>
+            <input type="submit" value="invia">
+        </form>
+        <br><br><br>
+        <input type="button" id="signupButton" value="Sign Up">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $("#submit").click(function () {
-                    console.log("richiesta");
-                    $.ajax({
-                        type: 'POST',
-                        url: 'http://localhost:8080/ws/rest/ciao',
-                        contentType: 'application/json',
-                        data: JSON.stringify({nome: document.getElementsByName("nome")[0].value, cognome: document.getElementsByName("cognome")[0].value}),
-                        success: function (response) {
-                            $(".inputForm").val("");
-                            console.log("Andato");
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.log(jqHXR, textStatus, errorThrown);
-                        }
-                    })
-                })
-            })
+            document.getElementById("signupButton").addEventListener("click", function () {
+                window.location.href = "signUp.html";
+            });
+
         </script>
     </body>
 </html>

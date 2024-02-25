@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AJAX Request Example</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'url_del_tuo_endpoint',
+                    method: 'GET',
+                    headers: {
+                        'Nome-Header': 'Valore-Header'
+                    },
+                    contentType: 'application/json', // Tipo di contenuto dei dati inviati al server
+                    dataType: 'json', // Tipo di dati che ci si aspetta di ricevere come risposta
+                    data: {
+                        parametro1: valore1,
+                        parametro2: valore2
+                    },
+                    success: function (response) {
+                        console.log('Risposta ricevuta:', response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Errore durante la richiesta:', error);
+                    }
+                });
+            });
+        </script>
+
+    </body>
+</html>

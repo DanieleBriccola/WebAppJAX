@@ -18,25 +18,49 @@ import java.io.ObjectOutputStream;
  * @author danie
  */
 public class FileManager<T> {
-    private String filePath = "persistenzaFile.txt";
+    private String filePath = "persistenzaFile.bin";
 
     public void scrivi(T oggetto) throws IOException { 
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
-            System.out.println("File creato");
         }
 
-        try (FileOutputStream fos = new FileOutputStream(filePath);
+        try (FileOutputStream fos = new FileOutputStream(filePath); //con true non sovrascrivi
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(oggetto);
+        } 
+        
+        System.out.println("Scritto tutto");
+    }
+    
+    public void aggiungi(T oggetto) throws IOException { 
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(filePath,true);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(oggetto);
         } 
     }
 
-    public T leggi() throws IOException, ClassNotFoundException {
+    public T leggi() throws IOException{
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        
         try (FileInputStream fis = new FileInputStream(filePath);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             return (T) ois.readObject();
+        }
+        catch (IOException e) {
+            return null;
+        }
+        catch (ClassNotFoundException e) {
+            return null;
         }
     }
 }

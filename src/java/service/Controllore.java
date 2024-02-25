@@ -5,61 +5,71 @@
  */
 package service;
 
-import persistenza.PersistenzaAlunno;
-import dominio.Alunno;
+import dominio.Utente;
 import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+import persistenza.PersistenzaUtente;
 
 /**
  *
  * @author danie
  */
-@ApplicationPath("rest")
-@Path("ciao")
+@ApplicationPath("ws")
+@Path("utenti")
 public class Controllore extends Application {
-    private static PersistenzaAlunno persistenzaAlunno = new PersistenzaAlunno();
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response onGet(){
-        GenericEntity<List<Alunno>> elenco = new GenericEntity<List<Alunno>>(persistenzaAlunno.listAll()) {};
-        for(Alunno alunno : persistenzaAlunno.listAll()){
-            System.out.println(alunno.getCognome());
+
+    private static PersistenzaUtente persistenzaUtente;
+
+    static {
+        try {
+            persistenzaUtente = new PersistenzaUtente();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Errore durante l'inizializzazione di PersistenzaUtente", e);
         }
-        return Response.ok(elenco).build();
     }
-    
-    @GET
-    @Path("read")
-    public Response onGetJson(@QueryParam("nome") String nome){
-        return Response.ok(nome).build();
+
+    @POST
+    @Path("signUp")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response signUpForm(@FormParam("nickName") String nome, @FormParam("password") String password) throws IOException {
+        Utente utente = new Utente(nome,password);
+        System.out.println("nome: " + utente.getNome() + " cognome: " + utente.getPassWord());
+        persistenzaUtente.create(utente, utente.getNome());
+        return Response.ok("Utente Creato").build();
     }
     
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response onPostJson(Alunno alunno) throws IOException{
-        System.out.println("creato: " + alunno.getCognome());
-        persistenzaAlunno.create(alunno, alunno.getId());
-        persistenzaAlunno.scriviFile();
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response loginForm(@FormParam("nickName") String nome, @FormParam("password") String password) {
+        System.out.println("nome: " + nome + " cognome: " + password);
+
+        if (persistenzaUtente == null) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+
+        Utente utenteTemp = persistenzaUtente.read(nome);
+        if(utenteTemp == null){
+          return Response.status(Response.Status.FORBIDDEN).build();  
+        }
+        if (!utenteTemp.getPassWord().equals(password)) {
+            System.out.println("UtentePassword: " + utenteTemp.getPassWord() + " -- " + password);
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        URI nextPageUri = UriBuilder.fromPath("http://localhost:8080/ws/chat.jsp").queryParam("nome", utenteTemp.getNome()).build();
+        return Response.seeOther(nextPageUri).build();
     }
     
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response onPutJson(Alunno alunno){
-        persistenzaAlunno.update(alunno, alunno.getId());
-        return Response.ok().build();
+    @GET
+    @Path("Utenti")
+    public Response TuttiGliUtenti() {
+        GenericEntity<List<Utente>> elenco = new GenericEntity<List<Utente>>(persistenzaUtente.listAll()) {
+        };
+        return Response.ok(elenco).build();
     }
-    
-    @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response onDeleteJson(Alunno alunno){
-        persistenzaAlunno.delete(alunno.getId());
-        return Response.ok().build();
-    }
+
 }

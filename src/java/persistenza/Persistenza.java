@@ -22,23 +22,38 @@ public abstract class Persistenza<Key, Value> {
     protected abstract Map<Key, Value> setLista();
 
     public Persistenza() throws IOException, ClassNotFoundException {
+        FileManager<Map<Key, Value>> fileManager = new FileManager();
+        
         lista = setLista();
-        lista = leggiFile();
+        lista = fileManager.leggi();
+        if(lista == null){
+            lista = new HashMap();
+        }
     }
 
-    public void create(Value value, Key key) {
+    public void create(Value value, Key key){
         if (key == null) {
             Key newKey = generateNewKey();
             lista.put(newKey, value);
         } else {
             lista.put(key, value);
         }
+        FileManager<Map<Key,Value>> fileManager = new FileManager();
+        try {
+            fileManager.scrivi(lista);
+        }
+        catch(IOException e){
+            
+        }
     }
 
     public Value read(Key key) {
+        if (key == null) {
+            System.out.println("La chiave non puo essere null");
+            return null;
+        }
         return lista.get(key);
     }
-    
 
     public void update(Value value, Key key) {
         lista.replace(key, value);
@@ -51,17 +66,16 @@ public abstract class Persistenza<Key, Value> {
     public List<Value> listAll() {
         return new ArrayList<Value>(lista.values());
     }
-    
-    public void scriviFile() throws IOException{
-        FileManager<Map<Key,Value>> fileManager = new FileManager();
+
+    public void scriviFile() throws IOException {
+        FileManager<Map<Key, Value>> fileManager = new FileManager();
         fileManager.scrivi(lista);
     }
-    
-    public Map<Key,Value> leggiFile() throws IOException, ClassNotFoundException{
-        FileManager<Map<Key,Value>> fileManager = new FileManager();
+
+    public Map<Key, Value> leggiFile() throws IOException, ClassNotFoundException {
+        FileManager<Map<Key, Value>> fileManager = new FileManager();
         return fileManager.leggi();
     }
-    
 
     protected abstract Key generateNewKey();
 
